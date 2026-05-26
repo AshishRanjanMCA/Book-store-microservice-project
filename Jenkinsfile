@@ -30,7 +30,7 @@ pipeline {
         stage('Build User Service') {
             steps {
                 dir('user-service') {
-                    sh './mvnw clean package -DskipTests'
+                    sh 'mvn clean package -DskipTests'
                 }
             }
         }
@@ -38,7 +38,7 @@ pipeline {
         stage('Build Book Service') {
             steps {
                 dir('book-service') {
-                    sh './mvnw clean package -DskipTests'
+                    sh 'mvn clean package -DskipTests'
                 }
             }
         }
@@ -46,7 +46,7 @@ pipeline {
         stage('Build Order Service') {
             steps {
                 dir('order-service') {
-                    sh './mvnw clean package -DskipTests'
+                    sh 'mvn clean package -DskipTests'
                 }
             }
         }
