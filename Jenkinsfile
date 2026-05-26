@@ -62,15 +62,24 @@ pipeline {
             }
         }
 
-        stage('Trivy Security Scan') {
+       stage('Trivy Security Scan') {
     steps {
 
         sh '''
-        docker run --rm aquasec/trivy image ashishranjanyadav/user-service:${BUILD_NUMBER}
+        docker run --rm \
+        -v /var/run/docker.sock:/var/run/docker.sock \
+        aquasec/trivy image --scanners vuln \
+        ashishranjanyadav/user-service:${BUILD_NUMBER}
 
-        docker run --rm aquasec/trivy image ashishranjanyadav/book-service:${BUILD_NUMBER}
+        docker run --rm \
+        -v /var/run/docker.sock:/var/run/docker.sock \
+        aquasec/trivy image --scanners vuln \
+        ashishranjanyadav/book-service:${BUILD_NUMBER}
 
-        docker run --rm aquasec/trivy image ashishranjanyadav/order-service:${BUILD_NUMBER}
+        docker run --rm \
+        -v /var/run/docker.sock:/var/run/docker.sock \
+        aquasec/trivy image --scanners vuln \
+        ashishranjanyadav/order-service:${BUILD_NUMBER}
         '''
     }
 }
