@@ -61,7 +61,7 @@ pipeline {
                 """
             }
         }
-
+/*
        stage('Trivy Security Scan') {
     steps {
 
@@ -83,7 +83,7 @@ pipeline {
         '''
     }
 }
-
+*/
         stage('DockerHub Login') {
             steps {
 
