@@ -63,15 +63,17 @@ pipeline {
         }
 
         stage('Trivy Security Scan') {
-            steps {
+    steps {
 
-                sh """
-                trivy image ${USER_IMAGE}:${IMAGE_TAG}
-                trivy image ${BOOK_IMAGE}:${IMAGE_TAG}
-                trivy image ${ORDER_IMAGE}:${IMAGE_TAG}
-                """
-            }
-        }
+        sh '''
+        docker run --rm aquasec/trivy image ashishranjanyadav/user-service:${BUILD_NUMBER}
+
+        docker run --rm aquasec/trivy image ashishranjanyadav/book-service:${BUILD_NUMBER}
+
+        docker run --rm aquasec/trivy image ashishranjanyadav/order-service:${BUILD_NUMBER}
+        '''
+    }
+}
 
         stage('DockerHub Login') {
             steps {
