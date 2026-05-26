@@ -14,8 +14,8 @@ pipeline {
     }
 
     tools {
-        jdk 'jdk21'
-	maven 'maven'
+        jdk 'JDK21'
+	maven 'Maven'
     }
 
     stages {
