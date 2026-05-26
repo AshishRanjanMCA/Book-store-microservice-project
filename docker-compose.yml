@@ -1,0 +1,75 @@
+version: '3.9'
+
+services:
+
+  mysql-user:
+    image: mysql:8
+    container_name: mysql-user
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: userdb
+    ports:
+      - "3307:3306"
+    volumes:
+      - userdb_data:/var/lib/mysql
+
+  user-service:
+    build:
+      context: ./user-service
+    container_name: user-service
+    restart: always
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql-user
+
+  mysql-book:
+    image: mysql:8
+    container_name: mysql-book
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bookdb
+    ports:
+      - "3308:3306"
+    volumes:
+      - bookdb_data:/var/lib/mysql
+
+  book-service:
+    build:
+      context: ./book-service
+    container_name: book-service
+    restart: always
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mysql-book
+
+  mysql-order:
+    image: mysql:8
+    container_name: mysql-order
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: orderdb
+    ports:
+      - "3309:3306"
+    volumes:
+      - orderdb_data:/var/lib/mysql
+
+  order-service:
+    build:
+      context: ./order-service
+    container_name: order-service
+    restart: always
+    ports:
+      - "8083:8083"
+    depends_on:
+      - mysql-order
+
+volumes:
+  userdb_data:
+  bookdb_data:
+  orderdb_data:
+
